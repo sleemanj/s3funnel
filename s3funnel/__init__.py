@@ -161,7 +161,8 @@ class S3Funnel(object):
             try:
                 r = bucket.get_all_keys(marker=marker, prefix=prefix, delimiter=delimiter)
                 for k in r:
-                    yield k.name
+		    yield "%s\t%s\ts3://%s/%s" %( k.last_modified, k.size, k.bucket.name, k.name )
+                    #yield k.name
                 if k:
                     marker = k.name
                 more_results= r.is_truncated
